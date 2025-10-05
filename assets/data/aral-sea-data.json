@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "title": "Aral Sea Environmental Data",
+    "source": "NASA Terra Satellite Data & Environmental Reports",
+    "lastUpdated": "2024-09-02",
+    "description": "Historical data showing the environmental decline of the Aral Sea"
+  },
+  "waterLevel": [
+    { "year": 1999, "level": 100, "area": 68000, "volume": 1100 },
+    { "year": 2000, "level": 95, "area": 64600, "volume": 1045 },
+    { "year": 2005, "level": 75, "area": 51000, "volume": 825 },
+    { "year": 2010, "level": 45, "area": 30600, "volume": 495 },
+    { "year": 2015, "level": 25, "area": 17000, "volume": 275 },
+    { "year": 2020, "level": 15, "area": 10200, "volume": 165 },
+    { "year": 2024, "level": 10, "area": 6800, "volume": 110 }
+  ],
+  "economicImpact": [
+    { "year": 1999, "fishingRevenue": 400000000, "cottonRevenue": 1000000000, "unemployment": 8 },
+    { "year": 2005, "fishingRevenue": 150000000, "cottonRevenue": 1500000000, "unemployment": 25 },
+    { "year": 2010, "fishingRevenue": 20000000, "cottonRevenue": 2000000000, "unemployment": 45 },
+    { "year": 2015, "fishingRevenue": 0, "cottonRevenue": 2200000000, "unemployment": 65 },
+    { "year": 2020, "fishingRevenue": 0, "cottonRevenue": 2100000000, "unemployment": 70 },
+    { "year": 2024, "fishingRevenue": 0, "cottonRevenue": 1800000000, "unemployment": 75 }
+  ],
+  "environmentalEffects": {
+    "saltStorms": {
+      "1999": 0,
+      "2005": 5,
+      "2010": 25,
+      "2015": 45,
+      "2020": 60,
+      "2024": 70
+    },
+    "temperatureChange": {
+      "1999": 0,
+      "2005": 1.2,
+      "2010": 2.8,
+      "2015": 4.5,
+      "2020": 6.2,
+      "2024": 7.8
+    }
+  },
+  "satelliteImages": {
+    "1999": "assets/images/aral-sea-1999.jpeg",
+    "2005": "assets/images/aral-sea-2005.jpeg",
+    "2010": "assets/images/aral-sea-2010.jpeg",
+    "2015": "assets/images/aral-sea-2015.jpeg",
+    "2020": "assets/images/aral-sea-2020.jpeg",
+    "2024": "assets/images/aral-sea-2024.jpg"
+  }
+}

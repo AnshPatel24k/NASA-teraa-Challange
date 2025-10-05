@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terra Timelapse Detective: The Shrinking of the Aral Sea</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/intersection-observer@0.12.0/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">Terra Timelapse Detective</h1>
+            <div class="nav-controls">
+                <button id="audio-toggle" class="audio-btn">🔊 Sound ON</button>
+                <button id="video-toggle" class="video-btn">📹 Timelapse</button>
+                <button id="what-if-btn" class="what-if-btn">What If?</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="hero" class="step" data-step="0">
+            <div class="hero-content">
+                <h1 class="hero-title">The Terra Timelapse Detective</h1>
+                <h2 class="hero-subtitle">Uncovering the Mystery of the Disappearing Sea</h2>
+                <p class="hero-description">
+                    In 1999, this was one of the world's largest inland water bodies. 
+                    Scroll down to investigate what happened...
+                </p>
+                <div class="scroll-indicator">
+                    <div class="scroll-arrow">↓</div>
+                    <p>Scroll to begin investigation</p>
+                </div>
+            </div>
+            <div class="satellite-container">
+                <img id="satellite-image" src="assets/images/aral-sea-1999.jpeg" alt="Aral Sea 1999" />
+                <div class="image-overlay">
+                    <div class="year-display">1999</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timelapse Video Section -->
+        <section id="timelapse-video-section" class="step story-section" data-step="1">
+            <div class="story-content">
+                <h2>📹 Watch 35 Years of Change</h2>
+                <p>This NASA satellite timelapse reveals the dramatic transformation of the Aral Sea from 1990 to 2024 — one of the most severe environmental disasters in modern history.</p>
+                
+                <div class="video-container">
+                    <video id="timelapse-video" controls preload="metadata" poster="assets/images/aral-sea-1999.jpeg">
+                        <source src="assets/videos/aral_sea_timelapse.mp4" type="video/mp4">
+                        <source src="assets/videos/aral_sea_timelapse.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    
+                    <div class="video-controls">
+                        <button id="play-pause-btn" class="video-control-btn">▶️ Play</button>
+                        <button id="restart-btn" class="video-control-btn">🔄 Restart</button>
+                        <button id="fullscreen-btn" class="video-control-btn">🔍 Fullscreen</button>
+                        
+                        <div class="speed-controls">
+                            <label>Speed: </label>
+                            <button class="speed-btn" data-speed="0.25">0.25x</button>
+                            <button class="speed-btn" data-speed="0.5">0.5x</button>
+                            <button class="speed-btn active" data-speed="1">1x</button>
+                            <button class="speed-btn" data-speed="1.5">1.5x</button>
+                            <button class="speed-btn" data-speed="2">2x</button>
+                        </div>
+                    </div>
+                    
+                    <div class="video-timeline">
+                        <div class="timeline-markers">
+                            <div class="marker" data-time="0" data-year="1990">1990</div>
+                            <div class="marker" data-time="25" data-year="2000">2000</div>
+                            <div class="marker" data-time="50" data-year="2010">2010</div>
+                            <div class="marker" data-time="75" data-year="2020">2020</div>
+                            <div class="marker" data-time="100" data-year="2025">2025</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-info">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <h4>📊 Data Source</h4>
+                            <p>NASA Terra/MODIS & Landsat satellite imagery</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>📅 Time Period</h4>
+                            <p>35 years (1990-2025)</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>📍 Location</h4>
+                            <p>Aral Sea, Central Asia (45.0°N, 60.0°E)</p>
+                        </div>
+                        <div class="info-item">
+                            <h4>💧 Water Loss</h4>
+                            <p>90% of original volume disappeared</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BEGIN: Before/After Slider Section -->
+        <section id="comparison-section" class="step">
+            <div class="comparison-container">
+                <h2>The Dramatic Transformation</h2>
+                <p>Drag the slider to see the shocking change from a thriving sea to its near disappearance.</p>
+                <div class="image-comparison-slider">
+                    <div class="comparison-wrapper" style="position:relative;">
+                        <!-- Before Image -->
+                        <div class="before-image">
+                            <img src="assets/images/aral-sea-1999.jpeg" alt="Aral Sea before shrinkage" />
+                            <div class="image-label before-label">1990 - Full</div>
+                        </div>
+                        <!-- After Image -->
+                        <div class="after-image">
+                            <img src="assets/images/aral-sea-2024.jpg" alt="Aral Sea after shrinkage" />
+                            <div class="image-label after-label">2025 - Almost Gone</div>
+                        </div>
+                        <!-- Slider Handle & Range -->
+                        <div class="slider-handle">
+                            <div class="handle"></div>
+                            <div class="handle-line"></div>
+                        </div>
+                        <input type="range" class="slider-input" min="0" max="100" value="50" aria-label="Image Slider"/>
+                    </div>
+                </div>
+                <div class="comparison-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">68,000</span>
+                        <span class="stat-label">km² in 1990</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">7,000</span>
+                        <span class="stat-label">km² in 2025</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">90%</span>
+                        <span class="stat-label">Volume Lost</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- END: Before/After Slider Section -->
+
+        <!-- Story Sections -->
+        <section id="mystery-begins" class="step story-section" data-step="2">
+            <div class="story-content">
+                <h2>🔍 The Mystery Begins</h2>
+                <p>Something extraordinary happened to this massive lake. As we examine satellite data from NASA's Terra satellite, a disturbing pattern emerges...</p>
+                <div class="data-point">
+                    <span class="stat">90%</span>
+                    <span class="stat-label">of the water has vanished</span>
+                </div>
+                <button class="replay-video-btn" onclick="window.videoHandler.replayFromTimestamp(0)">
+                    🔄 Replay Video from 1990
+                </button>
+            </div>
+        </section>
+
+        <section id="investigation-deepens" class="step story-section" data-step="3">
+            <div class="story-content">
+                <h2>🕵️ The Investigation Deepens</h2>
+                <p>The evidence points to human activity. Massive irrigation projects diverted the rivers that fed the Aral Sea, turning cotton fields green while the sea turned brown.</p>
+                <div id="interactive-map" class="map-container"></div>
+                <button class="replay-video-btn" onclick="window.videoHandler.replayFromTimestamp(25)">
+                    🔄 See 2000s Changes in Video
+                </button>
+            </div>
+        </section>
+
+        <section id="evidence-unfolds" class="step story-section" data-step="4">
+            <div class="story-content">
+                <h2>📈 The Evidence Unfolds</h2>
+                <p>The numbers tell a devastating story. Fish catches plummeted, communities were displaced, and toxic salt storms began affecting human health.</p>
+                <div id="data-visualization" class="chart-container"></div>
+                <button class="replay-video-btn" onclick="window.videoHandler.replayFromTimestamp(50)">
+                    🔄 See 2010s Impact in Video
+                </button>
+            </div>
+        </section>
+
+        <section id="what-if-section" class="step story-section hidden" data-step="5">
+            <div class="story-content">
+                <h2>🤔 What If We Could Change History?</h2>
+                <p>Explore different scenarios. What would have happened with better water management?</p>
+                <div class="simulator-container">
+                    <div class="controls">
+                        <label for="water-usage">Agricultural Water Usage:</label>
+                        <input type="range" id="water-usage" min="0" max="100" value="80">
+                        <span id="water-value">80%</span>
+                    </div>
+                    <div class="controls">
+                        <label for="conservation">Conservation Efforts:</label>
+                        <input type="range" id="conservation" min="0" max="100" value="20">
+                        <span id="conservation-value">20%</span>
+                    </div>
+                    <div id="scenario-result"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Q&A Assistant Section -->
+        <section id="ai-assistant-section" class="step story-section" data-step="7">
+            <div class="story-content">
+                <h2>🤖 Ask Dr. Terra - AI Environmental Detective</h2>
+                <p>Have questions about the Aral Sea disaster? Ask our AI assistant powered by satellite data analysis!</p>
+        
+                <div class="ai-chat-container">
+                    <div class="chat-header">
+                        <div class="ai-avatar">🌍</div>
+                        <div class="ai-info">
+                            <h3>Dr. Terra AI</h3>
+                            <p class="ai-status">Ready to answer your questions</p>
+                        </div>
+                        <div class="chat-controls">
+                            <button id="clear-chat" class="chat-control-btn">🗑️ Clear</button>
+                            <button id="voice-toggle" class="chat-control-btn">🎤 Voice</button>
+                        </div>
+                    </div>
+            
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message ai-message">
+                            <div class="message-avatar">🌍</div>
+                            <div class="message-content">
+                                <p>Hello! I'm Dr. Terra, your AI environmental detective. I can answer questions about:</p>
+                                <ul>
+                                    <li>🛰️ Satellite data and imagery</li>
+                                    <li>💧 Water loss and environmental impact</li>
+                                    <li>🌾 Agricultural causes and irrigation</li>
+                                    <li>🏘️ Human and economic consequences</li>
+                                    <li>🌍 Similar environmental disasters worldwide</li>
+                                </ul>
+                                <p>Try asking: "What caused the Aral Sea to shrink?" or "How much water was lost?"</p>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="quick-questions">
+                        <h4>Quick Questions:</h4>
+                        <div class="quick-question-buttons">
+                            <button class="quick-btn" data-question="What caused the Aral Sea to disappear?">❓ Main Cause</button>
+                            <button class="quick-btn" data-question="How much water was lost?">📊 Water Loss</button>
+                            <button class="quick-btn" data-question="When did this happen?">📅 Timeline</button>
+                            <button class="quick-btn" data-question="What was the human impact?">👥 Human Impact</button>
+                            <button class="quick-btn" data-question="Can it be restored?">🔄 Restoration</button>
+                            <button class="quick-btn" data-question="Are there similar cases worldwide?">🌍 Global Cases</button>
+                        </div>
+                    </div>
+            
+                    <div class="chat-input-container">
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="chat-input" 
+                                placeholder="Ask me anything about the Aral Sea disaster..."
+                                autocomplete="off"
+                            />
+                            <button id="send-button" class="send-btn">
+                                <span class="send-icon">📤</span>
+                            </button>
+                        </div>
+                        <div class="input-suggestions" id="input-suggestions"></div>
+                    </div>
+                </div>
+        
+                <div class="ai-disclaimer">
+                    <p><em>💡 This AI assistant uses pre-programmed responses based on NASA satellite data and environmental research. For the most current information, please consult official sources.</em></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==== NEW: Global Water Crisis Map ==== -->
+        <section id="global-map-section" class="step story-section" data-step="8">
+            <div class="story-content">
+                <h2>🌍 Global Water Crisis Map</h2>
+                <p>The Aral Sea isn't alone. Explore other lakes and rivers suffering the same fate around the world due to climate change and human activity.</p>
+                
+                <div id="global-crisis-map" class="map-container" style="height: 500px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"></div>
+                
+                <div class="map-legend">
+                    <span class="legend-item">
+                        <i class="legend-marker" style="background:#e74c3c"></i> 
+                        Severe Loss >80%
+                    </span>
+                    <span class="legend-item">
+                        <i class="legend-marker" style="background:#f39c12"></i> 
+                        Moderate Loss 50–80%
+                    </span>
+                    <span class="legend-item">
+                        <i class="legend-marker" style="background:#2ecc71"></i> 
+                        Mild Loss <50%
+                    </span>
+                </div>
+                
+                <div class="global-crisis-info">
+                    <div class="crisis-stats">
+                        <div class="crisis-stat-item">
+                            <span class="crisis-number">2.2B</span>
+                            <span class="crisis-label">People lack access to safely managed drinking water</span>
+                        </div>
+                        <div class="crisis-stat-item">
+                            <span class="crisis-number">40%</span>
+                            <span class="crisis-label">Of world's population affected by water scarcity</span>
+                        </div>
+                        <div class="crisis-stat-item">
+                            <span class="crisis-number">81%</span>
+                            <span class="crisis-label">Of freshwater lakes are shrinking due to climate change</span>
+                        </div>
+                    </div>
+                    
+                    <p class="global-message">
+                        <strong>This is a global crisis.</strong> NASA satellite data shows water bodies disappearing worldwide at an unprecedented rate. The Aral Sea was just the beginning.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- ==== END: Global Water Crisis Map ==== -->
+
+        <section id="conclusion" class="step story-section" data-step="6">
+            <div class="story-content">
+                <h2>🌍 The Full Picture</h2>
+                <div class="comparison-container">
+                    <div class="before-after">
+                        <div class="before">
+                            <img src="assets/images/aral-sea-1999.jpeg" alt="Aral Sea 1999" />
+                            <h3>1999: Thriving Ecosystem</h3>
+                        </div>
+                        <div class="after">
+                            <img src="assets/images/aral-sea-2024.jpg" alt="Aral Sea 2025" />
+                            <h3>2025: Environmental Disaster</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="call-to-action">
+                                        <h3>Environmental Issues Near You</h3>
+                                        <button id="find-local" class="cta-button">Find Issues Near Me</button>
+                                        <div id="local-issues" class="local-results"></div>
+                                </div>
+                                <div class="share-section">
+                                    <h3>Share the Aral Sea Story</h3>
+                                    <button id="share-btn" class="share-btn">🔗 Share This Story</button>
+                                    <p id="share-status" class="share-status"></p>
+                                </div>
+                <button class="replay-video-btn highlight" onclick="window.videoHandler.scrollToVideoAndPlay()">
+                    🎬 Watch Complete Timelapse Again
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Audio Elements -->
+    <audio id="water-sounds" loop>
+        <source src="assets/audio/water-lapping.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wind-sounds" loop>
+        <source src="assets/audio/desert-wind.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/scrollama-handler.js"></script>
+    <script src="js/audio-handler.js"></script>
+    <script src="js/map-handler.js"></script>
+    <script src="js/data-viz.js"></script>
+    <script src="js/video-handler.js"></script>
+    <script src="js/comparison-slider.js"></script>
+    <script src="js/ai-assistant.js"></script>
+</body>
+</html>
